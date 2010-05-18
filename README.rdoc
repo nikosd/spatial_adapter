@@ -2,11 +2,11 @@
 
 This is the Spatial Adapter plugin for Rails which, manages the MySql Spatial and PostGIS geometric columns in a transparent way (that is like the other base data type columns). It also provides a way to manage these columns in migrations. It replaces both the "PostGIS Adapter for Rails" and "MySql Spatial Adapter for Rails" plugins.
 
-== About v0.1.9-fixes branch
+== About the "legacy" branch
 
-The purpose of this branch is to have an ActiveRecord 2.0.x compatible version with as many bug fixes as possible. In the future, the 1.x version *may* be made compatible with AR < 2.2 and 2.1 and if so, this branch will be kept only for historical reasons.
+The purpose of this branch is to have an ActiveRecord 2.0.x compatible version with as many bug fixes as possible. In the future, the 1.x version *may* be made compatible with AR < 2.2 and 2.1. If so, this branch can go down forever.
 
-FYI the root of this branch is the v0.1.9 tag.
+FYI the last tagged release from this branch is v0.1.9 and soon a v0.1.10 will be out.
 
 == Dependencies
 
