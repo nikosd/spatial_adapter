@@ -61,7 +61,7 @@ class FindPostgisTest < Test::Unit::TestCase
     assert(pts[0].data == "Point1" ||pts[1].data == "Point1" )
     assert(pts[0].data == "Point2" ||pts[1].data == "Point2" )
   end
-  
+
   def test_find_by_non_geom_column_condition
     pts = Park.find_all_by_data 'Point1'
     assert(pts,'find by non-geom column is not working')
