@@ -209,8 +209,8 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
       
   def indexes(table_name, name = nil) #:nodoc:
     result = query(<<-SQL, name)
-          SELECT i.relname, d.indisunique, a.attname , am.amname
-            FROM pg_class t, pg_class i, pg_index d, pg_attribute a, pg_am am
+          SELECT i.relname, d.indisunique, a.attname , am.amname, ty.typname
+            FROM pg_class t, pg_class i, pg_index d, pg_attribute a, pg_am am, pg_type ty
            WHERE i.relkind = 'i'
              AND d.indexrelid = i.oid
              AND d.indisprimary = 'f'
@@ -218,6 +218,7 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
              AND i.relam = am.oid
              AND t.relname = '#{table_name}'
              AND a.attrelid = t.oid
+             AND a.atttypid = ty.oid
              AND ( d.indkey[0]=a.attnum OR d.indkey[1]=a.attnum
                 OR d.indkey[2]=a.attnum OR d.indkey[3]=a.attnum
                 OR d.indkey[4]=a.attnum OR d.indkey[5]=a.attnum
@@ -231,7 +232,7 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
     
     result.each do |row|
       if current_index != row[0]
-        indexes << ActiveRecord::ConnectionAdapters::IndexDefinition.new(table_name, row[0], row[1] == "t", row[3] == "gist" ,[]) #index type gist indicates a spatial index (probably not totally true but let's simplify!)
+        indexes << ActiveRecord::ConnectionAdapters::IndexDefinition.new(table_name, row[0], row[1] == "t", (row[3] == "gist" && row[4] == 'geometry'), [])
         current_index = row[0]
       end
       
