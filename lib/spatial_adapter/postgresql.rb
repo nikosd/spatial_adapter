@@ -157,6 +157,7 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
        SELECT distinct i.relname, d.indisunique, d.indkey, t.oid, am.amname
          FROM pg_class t, pg_class i, pg_index d, pg_attribute a, pg_am am
        WHERE i.relkind = 'i'
+         AND d.indpred IS NULL
          AND d.indexrelid = i.oid
          AND d.indisprimary = 'f'
          AND t.oid = d.indrelid
