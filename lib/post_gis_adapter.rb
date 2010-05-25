@@ -219,6 +219,7 @@ ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
              AND t.relname = '#{table_name}'
              AND a.attrelid = t.oid
              AND a.atttypid = ty.oid
+             AND d.indpred IS NULL
              AND ( d.indkey[0]=a.attnum OR d.indkey[1]=a.attnum
                 OR d.indkey[2]=a.attnum OR d.indkey[3]=a.attnum
                 OR d.indkey[4]=a.attnum OR d.indkey[5]=a.attnum
