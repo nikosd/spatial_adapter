@@ -1,6 +1,13 @@
 require 'spatial_adapter'
 require 'active_record/connection_adapters/postgresql_adapter'
 
+GeoRuby::SimpleFeatures::Geometry.class_eval do
+  # Transforms a ++Geometry++ in a form suitable to be used in a YAML file (such as in a fixture)
+  def to_fixture_format
+    as_hex_ewkb
+  end
+end
+
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
   include SpatialAdapter
   
